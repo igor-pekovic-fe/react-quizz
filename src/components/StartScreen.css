@@ -1,0 +1,25 @@
+.startscreen--container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.startscreen--title,
+.startscreen-subtitle {
+  color: var(--secondary-accent-color);
+}
+
+.startscreen--title {
+  font-size: 3.2rem;
+  font-weight: 700;
+}
+
+.startscreen--subtitle {
+  font-size: 1.6rem;
+}
+
+.startscreen--button {
+  margin-top: 2rem;
+  padding: 1rem 3rem;
+  border-radius: 15px;
+}
