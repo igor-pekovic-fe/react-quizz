@@ -36,6 +36,11 @@ function App() {
     });
   }
 
+  function goBack() {
+    setQuestions([]);
+    playAgain();
+  }
+
   useEffect(() => {
     let count = 0;
     for (const question of questions) {
@@ -99,6 +104,9 @@ function App() {
         <StartScreen startQuiz={startQuiz} />
       ) : (
         <div>
+          <button className="button" onClick={goBack}>
+            Go back
+          </button>
           {questionElements}
           {showAnswers ? (
             <div className="quiz--score-wrapper">
