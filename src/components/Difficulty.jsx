@@ -12,8 +12,6 @@ function Difficulty(props) {
     );
   });
 
-  console.log(diffBtns);
-
   return <div className="difficulty--wrapper">{diffBtns}</div>;
 }
 
