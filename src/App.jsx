@@ -14,10 +14,10 @@ function App() {
   const [difficulty, setDifficulty] = useState("");
 
   const difficulties = [
-    { difficulty: "Easy", htmlstring: "&difficulty=easy" },
-    { difficulty: "Hard", htmlstring: "&difficulty=hard" },
-    { difficulty: "Medium", htmlstring: "&difficulty=medium" },
-    { difficulty: "All", htmlstring: "" },
+    { value: 1, difficulty: "All", htmlstring: "" },
+    { value: 2, difficulty: "Easy", htmlstring: "&difficulty=easy" },
+    { value: 3, difficulty: "Medium", htmlstring: "&difficulty=medium" },
+    { value: 4, difficulty: "Hard", htmlstring: "&difficulty=hard" },
   ];
 
   function startQuiz() {
