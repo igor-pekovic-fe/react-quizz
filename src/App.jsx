@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import StartScreen from "./components/StartScreen";
 import Questions from "./components/Questions";
+import Difficulty from "./components/Difficulty";
 import "./App.css";
 
 function App() {
@@ -10,6 +11,14 @@ function App() {
   const [isQuizStarted, setIsQuizStarted] = useState(false);
   const [allComplete, setAllComplete] = useState(false);
   const [showAnswers, setShowAnswers] = useState(false);
+  const [difficulty, setDifficulty] = useState("");
+
+  const difficulties = [
+    { difficulty: "Easy", htmlstring: "&difficulty=easy" },
+    { difficulty: "Hard", htmlstring: "&difficulty=hard" },
+    { difficulty: "Medium", htmlstring: "&difficulty=medium" },
+    { difficulty: "All", htmlstring: "" },
+  ];
 
   function startQuiz() {
     setIsQuizStarted(true);
@@ -64,7 +73,7 @@ function App() {
     if (isQuizStarted === true || questions.length > 0) {
       async function getQuestions() {
         const res = await fetch(
-          `https://opentdb.com/api.php?amount=5&type=multiple`
+          `https://opentdb.com/api.php?amount=5${difficulty}&type=multiple`
         );
         const data = await res.json();
 
@@ -101,7 +110,13 @@ function App() {
   return (
     <main className="quiz--container">
       {questions.length == 0 ? (
-        <StartScreen startQuiz={startQuiz} />
+        <div>
+          <StartScreen startQuiz={startQuiz} />
+          <Difficulty
+            setDifficulty={setDifficulty}
+            difficulties={difficulties}
+          />
+        </div>
       ) : (
         <div>
           <button className="button" onClick={goBack}>
