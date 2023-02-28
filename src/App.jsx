@@ -5,14 +5,23 @@ import Difficulty from "./components/Difficulty";
 import "./App.css";
 
 function App() {
-  // State for storing questions and answers from api
+  // State for keeping track of score
   const [score, setScore] = useState(0);
+  // State for storing questions and answers from api
   const [questions, setQuestions] = useState([]);
-  const [isQuizStarted, setIsQuizStarted] = useState(false);
+  // State for keeping track if the quiz is started
+  const [startQuiz, setStartQuiz] = useState(false);
+  // State for keeping track if all questions have
+  // an answer chosen
   const [allComplete, setAllComplete] = useState(false);
+  // State for checking if answers should be shown
+  // (depends on allComplete state)
   const [showAnswers, setShowAnswers] = useState(false);
+  // State for setting difficulty of quiz
   const [difficulty, setDifficulty] = useState("");
 
+  // Array of objects containing HTML strings which is
+  // used to set the difficulty of quiz in the API call
   const difficulties = [
     { value: 1, difficulty: "All", htmlstring: "" },
     { value: 2, difficulty: "Easy", htmlstring: "&difficulty=easy" },
@@ -20,15 +29,21 @@ function App() {
     { value: 4, difficulty: "Hard", htmlstring: "&difficulty=hard" },
   ];
 
+  // Helper function to toggle startQuiz state
   function startQuiz() {
-    setIsQuizStarted(true);
+    setStartQuiz(true);
   }
 
   function playAgain() {
-    setIsQuizStarted((prevState) => !prevState);
+    setStartQuiz((prevState) => !prevState);
     setShowAnswers(false);
     setAllComplete(false);
     setScore(0);
+  }
+
+  function goBack() {
+    setQuestions([]);
+    playAgain();
   }
 
   function checkAnswers() {
@@ -43,11 +58,6 @@ function App() {
           : question;
       });
     });
-  }
-
-  function goBack() {
-    setQuestions([]);
-    playAgain();
   }
 
   useEffect(() => {
@@ -70,7 +80,7 @@ function App() {
   }, [questions]);
 
   useEffect(() => {
-    if (isQuizStarted === true || questions.length > 0) {
+    if (startQuiz === true || questions.length > 0) {
       async function getQuestions() {
         const res = await fetch(
           `https://opentdb.com/api.php?amount=5${difficulty}&type=multiple`
@@ -93,7 +103,7 @@ function App() {
       }
       getQuestions();
     }
-  }, [isQuizStarted]);
+  }, [startQuiz]);
 
   const questionElements = questions.map((question, index) => {
     return (
