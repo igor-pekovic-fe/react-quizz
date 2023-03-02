@@ -30,7 +30,7 @@ function App() {
   ];
 
   // Helper function to toggle startQuiz state
-  function startQuiz() {
+  function beginQuiz() {
     setStartQuiz(true);
   }
 
@@ -40,7 +40,6 @@ function App() {
     setAllComplete(false);
     setScore(0);
   }
-
   function goBack() {
     setQuestions([]);
     playAgain();
@@ -121,7 +120,7 @@ function App() {
     <main className="quiz--container">
       {questions.length == 0 ? (
         <div>
-          <StartScreen startQuiz={startQuiz} />
+          <StartScreen startQuiz={beginQuiz} />
           <Difficulty
             setDifficulty={setDifficulty}
             difficulties={difficulties}
@@ -141,14 +140,16 @@ function App() {
               </button>
             </div>
           ) : (
-            <button
-              className="button"
-              disabled={!allComplete}
-              onClick={checkAnswers}
-              data-type={allComplete || "inverted"}
-            >
-              Check Answers
-            </button>
+            <div className="check-answers-btn">
+              <button
+                className="button"
+                disabled={!allComplete}
+                onClick={checkAnswers}
+                data-type={allComplete || "inverted"}
+              >
+                Check Answers
+              </button>
+            </div>
           )}
         </div>
       )}

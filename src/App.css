@@ -27,6 +27,7 @@ button {
 .quiz--container {
   max-width: 55rem;
   padding: 4rem 7.5rem;
+  box-shadow: 0 0 1rem 0.5rem hsla(0, 0%, 0%, 0.2);
 }
 
 .quiz--score-wrapper {
@@ -57,4 +58,10 @@ button {
   background-color: var(--main-neutral-color);
   color: var(--main-primary-color);
   outline: 1px solid var(--main-primary-color);
+}
+
+.check-answers-btn {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
 }
