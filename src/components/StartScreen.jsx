@@ -8,6 +8,15 @@ function Start(props) {
       <button className="startscreen--button button" onClick={props.startQuiz}>
         Start Quiz
       </button>
+      <form id="test-form">
+        <input
+          type="text"
+          id="test"
+          placeholder="Default is 5"
+          name="numberOfQuestions"
+          onChange={props.setNrQuestions}
+        />
+      </form>
     </div>
   );
 }

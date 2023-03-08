@@ -19,6 +19,8 @@ function App() {
   const [showAnswers, setShowAnswers] = useState(false);
   // State for setting difficulty of quiz
   const [difficulty, setDifficulty] = useState("");
+  // State for the number of questions
+  const [nrOfQuestions, setNrOfQuestions] = useState(5);
 
   // Array of objects containing HTML strings which is
   // used to set the difficulty of quiz in the API call
@@ -28,6 +30,10 @@ function App() {
     { value: 3, difficulty: "Medium", htmlstring: "&difficulty=medium" },
     { value: 4, difficulty: "Hard", htmlstring: "&difficulty=hard" },
   ];
+
+  function handleNrOfQuestions(e) {
+    setNrOfQuestions(e.target.value);
+  }
 
   // Helper function to toggle startQuiz state
   function beginQuiz() {
@@ -43,6 +49,7 @@ function App() {
   function goBack() {
     setQuestions([]);
     playAgain();
+    setNrOfQuestions(5);
   }
 
   function checkAnswers() {
@@ -82,7 +89,7 @@ function App() {
     if (startQuiz === true || questions.length > 0) {
       async function getQuestions() {
         const res = await fetch(
-          `https://opentdb.com/api.php?amount=5${difficulty}&type=multiple`
+          `https://opentdb.com/api.php?amount=${nrOfQuestions}${difficulty}&type=multiple`
         );
         const data = await res.json();
 
@@ -120,7 +127,10 @@ function App() {
     <main className="quiz--container">
       {questions.length == 0 ? (
         <div>
-          <StartScreen startQuiz={beginQuiz} />
+          <StartScreen
+            startQuiz={beginQuiz}
+            setNrQuestions={handleNrOfQuestions}
+          />
           <Difficulty
             setDifficulty={setDifficulty}
             difficulties={difficulties}
