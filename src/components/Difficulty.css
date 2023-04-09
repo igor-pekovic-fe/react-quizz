@@ -1,0 +1,15 @@
+.difficulty--wrapper {
+  display: flex;
+  gap: 1rem;
+  margin-top: 5rem;
+}
+
+.difficulty--wrapper > button {
+  background-color: var(--main-neutral-color);
+  color: var(--main-primary-color);
+}
+
+.difficulty--wrapper > button:is(:focus, :active) {
+  color: var(--main-neutral-color);
+  background-color: var(--main-primary-color);
+}

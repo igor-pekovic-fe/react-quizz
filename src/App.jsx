@@ -1,25 +1,55 @@
 import { useState, useEffect } from "react";
 import StartScreen from "./components/StartScreen";
 import Questions from "./components/Questions";
+import Difficulty from "./components/Difficulty";
 import "./App.css";
 
 function App() {
-  // State for storing questions and answers from api
+  // State for keeping track of score
   const [score, setScore] = useState(0);
+  // State for storing questions and answers from api
   const [questions, setQuestions] = useState([]);
-  const [isQuizStarted, setIsQuizStarted] = useState(false);
+  // State for keeping track if the quiz is started
+  const [startQuiz, setStartQuiz] = useState(false);
+  // State for keeping track if all questions have
+  // an answer chosen
   const [allComplete, setAllComplete] = useState(false);
+  // State for checking if answers should be shown
+  // (depends on allComplete state)
   const [showAnswers, setShowAnswers] = useState(false);
+  // State for setting difficulty of quiz
+  const [difficulty, setDifficulty] = useState("");
+  // State for the number of questions
+  const [nrOfQuestions, setNrOfQuestions] = useState(5);
 
-  function startQuiz() {
-    setIsQuizStarted(true);
+  // Array of objects containing HTML strings which is
+  // used to set the difficulty of quiz in the API call
+  const difficulties = [
+    { value: 1, difficulty: "All", htmlstring: "" },
+    { value: 2, difficulty: "Easy", htmlstring: "&difficulty=easy" },
+    { value: 3, difficulty: "Medium", htmlstring: "&difficulty=medium" },
+    { value: 4, difficulty: "Hard", htmlstring: "&difficulty=hard" },
+  ];
+
+  function handleNrOfQuestions(e) {
+    setNrOfQuestions(e.target.value);
+  }
+
+  // Helper function to toggle startQuiz state
+  function beginQuiz() {
+    setStartQuiz(true);
   }
 
   function playAgain() {
-    setIsQuizStarted((prevState) => !prevState);
+    setStartQuiz((prevState) => !prevState);
     setShowAnswers(false);
     setAllComplete(false);
     setScore(0);
+  }
+  function goBack() {
+    setQuestions([]);
+    playAgain();
+    setNrOfQuestions(5);
   }
 
   function checkAnswers() {
@@ -56,10 +86,10 @@ function App() {
   }, [questions]);
 
   useEffect(() => {
-    if (isQuizStarted === true || questions.length > 0) {
+    if (startQuiz === true || questions.length > 0) {
       async function getQuestions() {
         const res = await fetch(
-          `https://opentdb.com/api.php?amount=5&type=multiple`
+          `https://opentdb.com/api.php?amount=${nrOfQuestions}${difficulty}&type=multiple`
         );
         const data = await res.json();
 
@@ -79,7 +109,7 @@ function App() {
       }
       getQuestions();
     }
-  }, [isQuizStarted]);
+  }, [startQuiz]);
 
   const questionElements = questions.map((question, index) => {
     return (
@@ -96,9 +126,21 @@ function App() {
   return (
     <main className="quiz--container">
       {questions.length == 0 ? (
-        <StartScreen startQuiz={startQuiz} />
+        <div>
+          <StartScreen
+            startQuiz={beginQuiz}
+            setNrQuestions={handleNrOfQuestions}
+          />
+          <Difficulty
+            setDifficulty={setDifficulty}
+            difficulties={difficulties}
+          />
+        </div>
       ) : (
         <div>
+          <button className="button" onClick={goBack}>
+            Go back
+          </button>
           {questionElements}
           {showAnswers ? (
             <div className="quiz--score-wrapper">
@@ -108,14 +150,16 @@ function App() {
               </button>
             </div>
           ) : (
-            <button
-              className="button"
-              disabled={!allComplete}
-              onClick={checkAnswers}
-              data-type={allComplete || "inverted"}
-            >
-              Check Answers
-            </button>
+            <div className="check-answers-btn">
+              <button
+                className="button"
+                disabled={!allComplete}
+                onClick={checkAnswers}
+                data-type={allComplete || "inverted"}
+              >
+                Check Answers
+              </button>
+            </div>
           )}
         </div>
       )}
