@@ -162,7 +162,7 @@ function App() {
           {questionElements}
           {showAnswers ? (
             <div className="quiz--score-wrapper">
-              <p className="quiz--score">{`You scored ${score}/5 correct answers`}</p>
+              <p className="quiz--score">{`You scored ${score}/${nrOfQuestions} correct answers`}</p>
               <button className="button" onClick={playAgain}>
                 Play Again
               </button>
