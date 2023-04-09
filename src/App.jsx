@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import StartScreen from "./components/StartScreen";
 import Questions from "./components/Questions";
 import Difficulty from "./components/Difficulty";
+import NumberOfQuestions from "./components/NumberOfQuestions";
+import Timer from "./components/Timer";
 import "./App.css";
 
 function App() {
@@ -127,10 +129,8 @@ function App() {
     <main className="quiz--container">
       {questions.length == 0 ? (
         <div>
-          <StartScreen
-            startQuiz={beginQuiz}
-            setNrQuestions={handleNrOfQuestions}
-          />
+          <StartScreen startQuiz={beginQuiz} />
+          <NumberOfQuestions setNrQuestions={handleNrOfQuestions} />
           <Difficulty
             setDifficulty={setDifficulty}
             difficulties={difficulties}
@@ -141,6 +141,7 @@ function App() {
           <button className="button" onClick={goBack}>
             Go back
           </button>
+          <Timer condition={showAnswers} />
           {questionElements}
           {showAnswers ? (
             <div className="quiz--score-wrapper">
