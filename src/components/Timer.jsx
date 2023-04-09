@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
 
-function Timer({ condition, timePassed }) {
-  const [timeElapsed, setTimeElapsed] = useState(0);
-  const [continueTimer, setContinueTimer] = useState(true);
-
+function Timer({
+  condition,
+  timeElapsed,
+  continueTimer,
+  setTimeElapsed,
+  setContinueTimer,
+}) {
   useEffect(() => {
     if (!continueTimer) return;
 
@@ -26,18 +29,7 @@ function Timer({ condition, timePassed }) {
       .padStart(2, "0")}`;
   };
 
-  const restartTimer = () => {
-    setTimeElapsed(0);
-    setContinueTimer(true);
-  };
-
-  timePassed(timeElapsed);
-
-  return (
-    <div>
-      <h2>Time elapsed: {formatTime(timeElapsed)}</h2>
-    </div>
-  );
+  return <h2>Time elapsed: {formatTime(timeElapsed)}</h2>;
 }
 
 export default Timer;

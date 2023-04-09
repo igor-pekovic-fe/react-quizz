@@ -23,6 +23,8 @@ function App() {
   const [difficulty, setDifficulty] = useState("");
   // State for the number of questions
   const [nrOfQuestions, setNrOfQuestions] = useState(5);
+  const [timeElapsed, setTimeElapsed] = useState(0);
+  const [continueTimer, setContinueTimer] = useState(true);
 
   // Array of objects containing HTML strings which is
   // used to set the difficulty of quiz in the API call
@@ -47,7 +49,14 @@ function App() {
     setShowAnswers(false);
     setAllComplete(false);
     setScore(0);
+    restartTimer();
   }
+
+  const restartTimer = () => {
+    setTimeElapsed(0);
+    setContinueTimer(true);
+  };
+
   function goBack() {
     setQuestions([]);
     playAgain();
@@ -113,10 +122,6 @@ function App() {
     }
   }, [startQuiz]);
 
-  function timeElapsed(param) {
-    console.log(param);
-  }
-
   const questionElements = questions.map((question, index) => {
     return (
       <Questions
@@ -145,7 +150,13 @@ function App() {
           <button className="button" onClick={goBack}>
             Go back
           </button>
-          <Timer condition={showAnswers} timePassed={timeElapsed} />
+          <Timer
+            condition={showAnswers}
+            timeElapsed={timeElapsed}
+            setTimeElapsed={setTimeElapsed}
+            continueTimer={continueTimer}
+            setContinueTimer={setContinueTimer}
+          />
           {questionElements}
           {showAnswers ? (
             <div className="quiz--score-wrapper">
