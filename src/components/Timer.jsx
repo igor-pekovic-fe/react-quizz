@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from "react";
 
-function Timer({ condition }) {
+function Timer({ condition, timePassed }) {
   const [timeElapsed, setTimeElapsed] = useState(0);
   const [continueTimer, setContinueTimer] = useState(true);
 
   useEffect(() => {
-    if (!continueTimer) {
-      return;
-    }
+    if (!continueTimer) return;
 
     const interval = setInterval(() => {
       setTimeElapsed((prevTime) => prevTime + 1);
@@ -17,9 +15,7 @@ function Timer({ condition }) {
   }, [continueTimer]);
 
   useEffect(() => {
-    if (condition) {
-      setContinueTimer(false);
-    }
+    if (condition) setContinueTimer(false);
   }, [condition]);
 
   const formatTime = (time) => {
@@ -29,6 +25,13 @@ function Timer({ condition }) {
       .toString()
       .padStart(2, "0")}`;
   };
+
+  const restartTimer = () => {
+    setTimeElapsed(0);
+    setContinueTimer(true);
+  };
+
+  timePassed(timeElapsed);
 
   return (
     <div>

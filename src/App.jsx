@@ -113,6 +113,10 @@ function App() {
     }
   }, [startQuiz]);
 
+  function timeElapsed(param) {
+    console.log(param);
+  }
+
   const questionElements = questions.map((question, index) => {
     return (
       <Questions
@@ -141,7 +145,7 @@ function App() {
           <button className="button" onClick={goBack}>
             Go back
           </button>
-          <Timer condition={showAnswers} />
+          <Timer condition={showAnswers} timePassed={timeElapsed} />
           {questionElements}
           {showAnswers ? (
             <div className="quiz--score-wrapper">
