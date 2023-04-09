@@ -1,11 +1,11 @@
 import "./StartScreen.css";
 
-function Start(props) {
+function Start({ startQuiz }) {
   return (
     <div className="startscreen--container">
       <h1 className="startscreen--title">Quizzical</h1>
       <p className="startscreen--subtitle">Test your trivia skills!</p>
-      <button className="startscreen--button button" onClick={props.startQuiz}>
+      <button className="startscreen--button button" onClick={startQuiz}>
         Start Quiz
       </button>
     </div>
