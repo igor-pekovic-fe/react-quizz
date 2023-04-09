@@ -147,16 +147,18 @@ function App() {
         </div>
       ) : (
         <div>
-          <button className="button" onClick={goBack}>
-            Go back
-          </button>
-          <Timer
-            condition={showAnswers}
-            timeElapsed={timeElapsed}
-            setTimeElapsed={setTimeElapsed}
-            continueTimer={continueTimer}
-            setContinueTimer={setContinueTimer}
-          />
+          <header className="quiz--header">
+            <button className="button" onClick={goBack}>
+              Go back
+            </button>
+            <Timer
+              condition={showAnswers}
+              timeElapsed={timeElapsed}
+              setTimeElapsed={setTimeElapsed}
+              continueTimer={continueTimer}
+              setContinueTimer={setContinueTimer}
+            />
+          </header>
           {questionElements}
           {showAnswers ? (
             <div className="quiz--score-wrapper">

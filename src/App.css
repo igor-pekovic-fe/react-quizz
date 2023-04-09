@@ -30,6 +30,13 @@ button {
   box-shadow: 0 0 1rem 0.5rem hsla(0, 0%, 0%, 0.2);
 }
 
+.quiz--header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
 .quiz--score-wrapper {
   display: flex;
   align-items: center;
